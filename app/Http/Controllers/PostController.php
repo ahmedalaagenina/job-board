@@ -13,7 +13,7 @@ class PostController extends Controller
         return view('post.index', ['posts' => $posts, 'title' => 'Posts']);
     }
 
-    public function show(int $id)
+    public function show( $id)
     {
         $post = Post::findOrFail($id);
 
@@ -24,13 +24,21 @@ class PostController extends Controller
     public function create()
     {
         Post::create([
-            'title' => 'find Post',
+            'title' => 'find Post 3',
             'content' => 'This is a new findable post.',
-            'author_id' => 1,
+            'author_id' => 2,
             'is_published' => true,
         ]);
 
         return redirect('/blog');
 
+    }
+
+    public function showComments( $id)
+    {
+        $post = Post::findOrFail($id);
+        $comments = $post->comments;
+
+        return view('post.comments', ['post' => $post, 'comments' => $comments]);
     }
 }
