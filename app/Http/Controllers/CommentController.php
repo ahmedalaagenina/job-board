@@ -23,11 +23,12 @@ class CommentController extends Controller
 
     public function create()
     {
-        Comment::create([
-            'author' => 'AG',
-            'content' => 'This is a new comment.',
-            'post_id' => 2,
-        ]);
+        // Comment::create([
+        //     'author' => 'AG',
+        //     'content' => 'This is a new comment.',
+        //     'post_id' => 2,
+        // ]);
+        Comment::factory(100)->create();
 
         return redirect('/blog');
 

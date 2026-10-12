@@ -8,12 +8,12 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::cursorPaginate(10);
 
         return view('post.index', ['posts' => $posts, 'title' => 'Posts']);
     }
 
-    public function show( $id)
+    public function show($id)
     {
         $post = Post::findOrFail($id);
 
@@ -23,18 +23,19 @@ class PostController extends Controller
 
     public function create()
     {
-        Post::create([
-            'title' => 'find Post 3',
-            'content' => 'This is a new findable post.',
-            'author_id' => 2,
-            'is_published' => true,
-        ]);
+        // Post::create([
+        //     'title' => 'find Post 3',
+        //     'content' => 'This is a new findable post.',
+        //     'author_id' => 2,
+        //     'is_published' => true,
+        // ]);
+        Post::factory(100)->create();
 
         return redirect('/blog');
 
     }
 
-    public function showComments( $id)
+    public function showComments($id)
     {
         $post = Post::findOrFail($id);
         $comments = $post->comments;
