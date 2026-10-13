@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $posts = Post::cursorPaginate(10);
@@ -13,33 +17,55 @@ class PostController extends Controller
         return view('post.index', ['posts' => $posts, 'title' => 'Posts']);
     }
 
-    public function show($id)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('post.create', ['title' => 'Create Post']);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
         $post = Post::findOrFail($id);
 
         return view('post.show', ['post' => $post, 'title' => $post->title]);
-
     }
 
-    public function create()
-    {
-        // Post::create([
-        //     'title' => 'find Post 3',
-        //     'content' => 'This is a new findable post.',
-        //     'author_id' => 2,
-        //     'is_published' => true,
-        // ]);
-        Post::factory(100)->create();
-
-        return redirect('/blog');
-
-    }
-
-    public function showComments($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         $post = Post::findOrFail($id);
-        $comments = $post->comments;
 
-        return view('post.comments', ['post' => $post, 'comments' => $comments]);
+        return view('post.edit', ['post' => $post, 'title' => 'Edit Post']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

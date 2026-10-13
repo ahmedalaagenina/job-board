@@ -2,39 +2,75 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $tags = Tag::all();
+        $tags = Tag::paginate(10);
 
         return view('tag.index', ['tags' => $tags, 'title' => 'Tags']);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        Tag::create([
-            'title' => 'tag '.rand(1, 1000),
-        ]);
+        // Tag::create([
+        //     'title' => 'tag ' . rand(1, 1000),
+        // ]);
 
-        return redirect('/blog');
-
+        // return redirect('/blog');
+        return view('tag.create', ['title' => 'Create Tag']);
     }
 
-    public function testMany2Many()
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        $post1 = Post::find(1);
-        $post2 = Post::find(2);
+        //
+    }
 
-        $post1->tags()->attach([1, 2]);
-        $post2->tags()->attach([1]);
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $tag = Tag::findOrFail($id);
 
-        return response()->json([
-            'post1' => $post1->tags,
-            'post2' => $post2->tags,
-        ]);
+        return view('tag.show', ['tag' => $tag]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $tag = Tag::findOrFail($id);
+
+        return view('tag.edit', ['tag' => $tag, 'title' => 'Edit Tag']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

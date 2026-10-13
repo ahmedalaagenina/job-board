@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
-    public function index()
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request)
     {
         return view('about', ['title' => 'About Us']);
     }

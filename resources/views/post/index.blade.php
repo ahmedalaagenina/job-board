@@ -22,7 +22,7 @@
 
                     <div class="flex items-center justify-between mt-4 text-sm">
                         <span class="text-slate-500">By {{ $post->author }}</span>
-                        <a href="/blog/{{ $post->id }}/comments" class="text-indigo-600 hover:underline">View Comments</a>
+                        <a href="/blog/{{ $post->id }}" class="text-indigo-600 hover:underline">View Comments</a>
                     </div>
                 </article>
             @empty

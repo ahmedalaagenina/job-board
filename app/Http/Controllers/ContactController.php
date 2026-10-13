@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index()
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request)
     {
-        return view('contact' , ['title' => 'Contact Us']);
+        return view('contact', ['title' => 'Contact Us']);
     }
 }

@@ -13,5 +13,18 @@
             </li>
         </ul>
     @endforeach
-    <a href="/blog/{{ $post->id }}/comments" class="text-blue-500 hover:underline">View All Comments</a>
+    <h2 class="text-2xl font-bold mt-8 mb-4"> Comments</h2>
+    @if ($post->comments->isEmpty())
+        <p>No comments found for this post.</p>
+    @else
+        <ul>
+            @foreach ($post->comments as $comment)
+                <li>
+                    <p><strong>Author:</strong> {{ $comment->author }}</p>
+                    <p><strong>Content:</strong> {{ $comment->body }}</p>
+                    <p><strong>Created At:</strong> {{ $comment->created_at->format('Y-m-d H:i') }}</p>
+                </li>
+            @endforeach
+        </ul>
+    @endif
 </x-layout>
