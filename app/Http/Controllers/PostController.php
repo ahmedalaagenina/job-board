@@ -59,9 +59,15 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BlogPostRequest $request, string $id)
     {
-        //
+        $post = Post::find($id);
+        if (!$post) {
+            return redirect()->route('blog.index')->with('error', 'Post not found Or May Have Been Deleted.');
+        }
+        $validated = $request->validated();
+        $post->update($validated);
+        return redirect()->route('blog.index')->with('success', 'Post updated successfully.');
     }
 
     /**
@@ -69,6 +75,11 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::find($id);
+        if (!$post) {
+            return redirect()->route('blog.index')->with('error', 'Post not found Or May Have Been Deleted.');
+        }
+        $post->delete();
+        return redirect()->route('blog.index')->with('success', 'Post deleted successfully.');
     }
 }

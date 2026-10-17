@@ -6,6 +6,11 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if (session('error'))
+            <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="space-y-4">
             @forelse ($posts as $post)
                 <article class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition">
@@ -27,6 +32,19 @@
                     <div class="flex items-center justify-between mt-4 text-sm">
                         <span class="text-slate-500">By {{ $post->author }}</span>
                         <a href="/blog/{{ $post->id }}" class="text-indigo-600 hover:underline">View Comments</a>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2 mt-4">
+                        <a href="{{ route('blog.edit', $post->id) }}"
+                            class="px-3 py-1 text-sm rounded bg-indigo-600 text-white hover:bg-indigo-700">Edit</a>
+
+                        <form action="{{ route('blog.destroy', $post->id) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this post?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="px-3 py-1 text-sm rounded bg-red-600 text-white hover:bg-red-700">Delete</button>
+                        </form>
                     </div>
                 </article>
             @empty

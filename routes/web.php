@@ -16,5 +16,8 @@ Route::get('/contact', ContactController::class);
 Route::get('/job', [JobController::class, 'index']);
 
 Route::resource('blog', PostController::class);
+Route::post('/blog/{blog}/comments', [CommentController::class, 'store'])
+    ->name('blog.comments.store');
+
 Route::resource('comments', CommentController::class);
 Route::resource('tags', TagController::class);

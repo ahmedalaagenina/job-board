@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -29,10 +30,20 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $blog)
     {
-        //
+        $post = Post::findOrFail($blog);
+
+        $validated = $request->validate([
+            'author' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $post->comments()->create($validated);
+
+        return back()->with('success', 'Comment Added Successfully');
     }
+
 
     /**
      * Display the specified resource.
