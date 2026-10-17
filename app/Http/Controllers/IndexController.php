@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Mcp\Request;
-
+use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     public function __invoke(Request $request)

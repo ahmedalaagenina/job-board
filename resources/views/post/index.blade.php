@@ -1,7 +1,11 @@
 <x-layout :title="$title">
     <main class="max-w-3xl mx-auto px-4 py-10">
         <h1 class="text-3xl font-bold text-slate-800 mb-8">Blog</h1>
-
+        @if (session('success'))
+            <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="space-y-4">
             @forelse ($posts as $post)
                 <article class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition">

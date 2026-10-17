@@ -10,6 +10,14 @@ class Post extends Model
 {
     use HasFactory;
     use HasUuids;
+    
+    protected function casts(): array
+    {
+        return [
+            'is_published' => 'boolean',
+        ];
+    }
+
     protected $fillable = ['title', 'body', 'author', 'is_published'];
 
     public function comments()
@@ -21,4 +29,5 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
 }
