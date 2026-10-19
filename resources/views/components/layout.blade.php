@@ -53,15 +53,41 @@
                         </a>
                     @endforeach
                 </div>
+                @auth
+                    <div class="flex: gap-1 flex items-center">
+                        <span class="text-sm text-slate-600">
+                            Welcome back, {{ Auth::user()->name }}
+                        </span>
+                        <a href="/blog/create"
+                            class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-indigo-600 transition">
+                            <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                            New Post
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button>
+                                logout
+                            </button>
 
-                <a href="/blog/create"
-                    class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-indigo-600 transition">
-                    <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14M5 12h14" />
-                    </svg>
-                    New Post
-                </a>
+                        </form>
+                    </div>
+                @else
+                    <div class="flex: gap-1 flex items-center">
+                        <a href="/login"
+                            class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-indigo-600 transition">
+                            login
+                        </a>
+                        <a href="/signup"
+                            class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-indigo-600 transition">
+                            signup
+                        </a>
+                    </div>
+                @endauth
+
+
 
                 <button id="menuToggle" type="button" aria-controls="mobileMenu" aria-expanded="false"
                     class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
