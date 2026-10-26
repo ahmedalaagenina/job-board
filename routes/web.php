@@ -26,11 +26,28 @@ Route::get('/job', [JobController::class, 'index']);
 
 // ## Protected routes
 Route::middleware('auth')->group(function () {
-    Route::resource('blog', PostController::class);
-    Route::post('/blog/{blog}/comments', [CommentController::class, 'store'])
-        ->name('blog.comments.store');
+    // Admin, Editor
+    Route::middleware('role:editor,admin')->group(function () {
+        Route::get('/blog/create', [PostController::class, 'create'])->name('blog.create');
+        Route::post('/blog', [PostController::class, 'store'])->name('blog.store');
+        Route::get('/blog/{post}/edit', [PostController::class, 'edit'])->name('blog.edit')->can('update', 'post');
+        Route::put('/blog/{post}', [PostController::class, 'update'])->name('blog.update')->can('update', 'post');
+    });
 
-    Route::resource('comments', CommentController::class);
+    // Admin
+    Route::middleware('role:admin')->group(function () {
+        Route::delete('/blog/{post}', [PostController::class, 'destroy'])->name('blog.destroy');
+    });
+
+    // Admin, Editor, viewer (any one)
+    Route::middleware('role:viewer,editor,admin')->group(function () {
+        Route::get('/blog', [PostController::class, 'index'])->name('blog.index');
+        Route::get('/blog/{post}', [PostController::class, 'show'])->name('blog.show');
+        Route::resource('comments', CommentController::class);
+    });
+
+    Route::post('/blog/{post}/comments', [CommentController::class, 'store'])
+        ->name('blog.comments.store');
 
     Route::resource('tags', TagController::class);
 });

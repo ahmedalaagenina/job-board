@@ -30,19 +30,6 @@
                 @enderror
             </div>
 
-            <div>
-                <label for="author" class="block text-sm font-medium text-slate-700 mb-1">Author</label>
-                <input type="text" id="author" name="author" value="{{ old('author', $post->author) }}"
-                    @class([
-                        'w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2',
-                        'border-red-500 focus:ring-red-500' => $errors->has('author'),
-                        'border-slate-300 focus:ring-indigo-500' => !$errors->has('author'),
-                    ])>
-                @error('author')
-                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
             <div class="flex items-center gap-2">
                 <input type="hidden" name="is_published" value="0">
                 <input type="checkbox" id="is_published" name="is_published" value="1" @checked(old('is_published', $post->is_published))

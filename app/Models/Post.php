@@ -10,7 +10,7 @@ class Post extends Model
 {
     use HasFactory;
     use HasUuids;
-    
+
     protected function casts(): array
     {
         return [
@@ -18,7 +18,7 @@ class Post extends Model
         ];
     }
 
-    protected $fillable = ['title', 'body', 'author', 'is_published'];
+    protected $fillable = ['title', 'body', 'is_published', 'user_id'];
 
     public function comments()
     {
@@ -30,4 +30,8 @@ class Post extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

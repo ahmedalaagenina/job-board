@@ -11,7 +11,7 @@
                     @class([
                         'w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2',
                         'border-red-500 focus:ring-red-500' => $errors->has('title'),
-                        'border-slate-300 focus:ring-indigo-500' => ! $errors->has('title'),
+                        'border-slate-300 focus:ring-indigo-500' => !$errors->has('title'),
                     ])>
                 @error('title')
                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
@@ -20,29 +20,16 @@
 
             <div>
                 <label for="body" class="block text-sm font-medium text-slate-700 mb-1">Body</label>
-                <textarea id="body" name="body" rows="6"
-                    @class([
-                        'w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2',
-                        'border-red-500 focus:ring-red-500' => $errors->has('body'),
-                        'border-slate-300 focus:ring-indigo-500' => ! $errors->has('body'),
-                    ])>{{ old('body') }}</textarea>
+                <textarea id="body" name="body" rows="6" @class([
+                    'w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2',
+                    'border-red-500 focus:ring-red-500' => $errors->has('body'),
+                    'border-slate-300 focus:ring-indigo-500' => !$errors->has('body'),
+                ])>{{ old('body') }}</textarea>
                 @error('body')
                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div>
-                <label for="author" class="block text-sm font-medium text-slate-700 mb-1">Author</label>
-                <input type="text" id="author" name="author" value="{{ old('author') }}"
-                    @class([
-                        'w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2',
-                        'border-red-500 focus:ring-red-500' => $errors->has('author'),
-                        'border-slate-300 focus:ring-indigo-500' => ! $errors->has('author'),
-                    ])>
-                @error('author')
-                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                @enderror
-            </div>
 
             <div class="flex items-center gap-2">
                 <input type="hidden" name="is_published" value="0">

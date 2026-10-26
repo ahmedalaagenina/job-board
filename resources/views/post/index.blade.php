@@ -1,4 +1,8 @@
 <x-layout :title="$title">
+    @php
+        $user = auth()->user();
+        $userRole = $user->role;
+    @endphp
     <main class="max-w-3xl mx-auto px-4 py-10">
         <h1 class="text-3xl font-bold text-slate-800 mb-8">Blog</h1>
         @if (session('success'))
@@ -9,6 +13,11 @@
         @if (session('error'))
             <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
                 {{ session('error') }}
+            </div>
+        @endif
+        @if (session('fail'))
+            <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
+                {{ session('fail') }}
             </div>
         @endif
         <div class="space-y-4">
@@ -30,21 +39,24 @@
                     <p class="text-slate-600 mt-2">{{ $post->body }}</p>
 
                     <div class="flex items-center justify-between mt-4 text-sm">
-                        <span class="text-slate-500">By {{ $post->author }}</span>
+                        <span class="text-slate-500">By {{ $post->user->name }}</span>
                         <a href="/blog/{{ $post->id }}" class="text-indigo-600 hover:underline">View Comments</a>
                     </div>
 
                     <div class="flex items-center justify-end gap-2 mt-4">
-                        <a href="{{ route('blog.edit', $post->id) }}"
-                            class="px-3 py-1 text-sm rounded bg-indigo-600 text-white hover:bg-indigo-700">Edit</a>
-
-                        <form action="{{ route('blog.destroy', $post->id) }}" method="POST"
-                            onsubmit="return confirm('Are you sure you want to delete this post?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="px-3 py-1 text-sm rounded bg-red-600 text-white hover:bg-red-700">Delete</button>
-                        </form>
+                        @if (in_array($userRole, ['admin', 'editor']) && $user->id == $post->user_id)
+                            <a href="{{ route('blog.edit', $post->id) }}"
+                                class="px-3 py-1 text-sm rounded bg-indigo-600 text-white hover:bg-indigo-700">Edit</a>
+                        @endif
+                        @if ($userRole == 'admin')
+                            <form action="{{ route('blog.destroy', $post->id) }}" method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this post?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="px-3 py-1 text-sm rounded bg-red-600 text-white hover:bg-red-700">Delete</button>
+                            </form>
+                        @endif
                     </div>
                 </article>
             @empty

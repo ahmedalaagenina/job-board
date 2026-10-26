@@ -15,7 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary()->first();
             $table->string('title');
             $table->text('body');
-            $table->string('author');
             $table->boolean('is_published');
             $table->timestamps();
         });
